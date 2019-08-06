@@ -1,0 +1,5 @@
+pool:
+  name: Hosted Ubuntu 1604
+
+steps:
+- bash: npm install
