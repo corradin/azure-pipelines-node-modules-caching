@@ -6,5 +6,5 @@ pool:
 steps:
 - bash: npm install
   displayName: NPM Install Dependencies
-- bash: ng build
+- bash: npm run build
   displayName: Build Angular application
