@@ -4,14 +4,18 @@ pool:
   name: Hosted Ubuntu 1604
 
 steps:
-- task: RestoreAndSaveCache@1
-  inputs:
-    keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-    targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-    vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
-    platformIndependent: true
+# - task: RestoreAndSaveCache@1
+#   inputs:
+#     keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+#     targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+#     vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
+#     platformIndependent: true
 - bash: npm install
   displayName: NPM Install Dependencies
   condition: ne(variables['CacheRestored'], 'true')
+- bash: ng lint
+  displayName: Run Angular linting
+- bash: ng test
+  displayName: Run unit tests
 - bash: npm run build
   displayName: Build Angular application
