@@ -3,7 +3,16 @@ trigger:
 pool:
   name: Hosted Ubuntu 1604
 
-steps:
+# jobs:
+#   - job: install
+#     pool:
+#       vmImage: 'Ubuntu 16.04'
+#     steps:
+#     - bash: npm install
+#       displayName: NPM Install Dependencies
+#       condition: ne(variables['CacheRestored'], 'true')
+#     - bash: ng lint
+#       displayName: Run Angular linting
 # - task: RestoreAndSaveCache@1
 #   inputs:
 #     keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
@@ -13,9 +22,9 @@ steps:
 - bash: npm install
   displayName: NPM Install Dependencies
   condition: ne(variables['CacheRestored'], 'true')
-- bash: ng lint
+- bash: npm run lint
   displayName: Run Angular linting
-- bash: ng test
+- bash: npm run test
   displayName: Run unit tests
 - bash: npm run build
   displayName: Build Angular application
