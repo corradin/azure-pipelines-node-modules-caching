@@ -20,6 +20,12 @@ jobs:
     pool:
       name: Hosted Ubuntu 1604
     steps:
+      - task: RestoreCache@1
+        inputs:
+          keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+          targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+          vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
+          platformIndependent: true
       - bash: npm run lint
         displayName: Run Angular linting
 
@@ -28,6 +34,12 @@ jobs:
     pool:
       name: Hosted Ubuntu 1604
     steps:
+      - task: RestoreCache@1
+        inputs:
+          keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+          targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+          vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
+          platformIndependent: true
       - bash: npm run test
         displayName: Run unit tests
 
@@ -36,5 +48,11 @@ jobs:
     pool:
       name: Hosted Ubuntu 1604
     steps:
+      - task: RestoreCache@1
+        inputs:
+          keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+          targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+          vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
+          platformIndependent: true
       - bash: npm run build
         displayName: Build Angular application
