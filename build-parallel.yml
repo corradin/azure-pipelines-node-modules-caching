@@ -20,7 +20,7 @@ jobs:
       - bash: npm run test
         displayName: Run unit tests
 
-  - job: Unit tests
+  - job: Build
     pool:
       name: Hosted Ubuntu 1604
     steps:
