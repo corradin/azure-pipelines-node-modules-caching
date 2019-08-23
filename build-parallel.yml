@@ -11,7 +11,7 @@ jobs:
       - bash: npm run lint
         displayName: Run Angular linting
 
-  - job: Unit tests
+  - job: Unit_tests
     pool:
       name: Hosted Ubuntu 1604
     steps:
