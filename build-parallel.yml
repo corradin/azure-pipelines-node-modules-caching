@@ -1,3 +1,4 @@
+name: Parallel build
 trigger:
 - master
 pool:
