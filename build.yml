@@ -1,8 +1,8 @@
 trigger:
 - master
 pool:
-  # name: Hosted Ubuntu 1604
-  vmImage: 'Ubuntu 16.04'
+  name: Hosted Ubuntu 1604
+  # vmImage: 'Ubuntu 16.04'
 
 # jobs:
 #   - job: install
