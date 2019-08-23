@@ -1,0 +1,14 @@
+trigger:
+- master
+pool:
+  name: Hosted Ubuntu 1604
+
+steps:
+- bash: npm install
+  displayName: NPM Install Dependencies
+- bash: npm run lint
+  displayName: Run Angular linting
+- bash: npm run test
+  displayName: Run unit tests
+- bash: npm run build
+  displayName: Build Angular application
