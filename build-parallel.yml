@@ -2,7 +2,21 @@ trigger:
   - master
 
 jobs:
-  - job: NPM_install
+  # - job: NPM_install
+  #   pool:
+  #     name: Hosted Ubuntu 1604
+  #   steps:
+  #     - task: RestoreAndSaveCache@1
+  #       inputs:
+  #         keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
+  #         targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
+  #         vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
+  #         platformIndependent: true
+  #     - bash: npm install
+  #       displayName: NPM Install Dependencies
+  #       condition: ne(variables['CacheRestored'], 'true')
+  - job: Linting
+    # dependsOn: NPM_install
     pool:
       name: Hosted Ubuntu 1604
     steps:
@@ -15,46 +29,39 @@ jobs:
       - bash: npm install
         displayName: NPM Install Dependencies
         condition: ne(variables['CacheRestored'], 'true')
-  - job: Linting_and_unit_tests
-    dependsOn: NPM_install
+      - bash: npm run lint
+        displayName: Run Angular linting
+
+  - job: Unit_tests
+    # dependsOn: NPM_install
     pool:
       name: Hosted Ubuntu 1604
     steps:
-      - task: RestoreCache@1
+      - task: RestoreAndSaveCache@1
         inputs:
           keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
           targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
           vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
           platformIndependent: true
-      - bash: npm run lint
-        displayName: Run Angular linting
+      - bash: npm install
+        displayName: NPM Install Dependencies
+        condition: ne(variables['CacheRestored'], 'true')
       - bash: npm run test
         displayName: Run unit tests
 
-  # - job: Unit_tests
-  #   dependsOn: NPM_install
-  #   pool:
-  #     name: Hosted Ubuntu 1604
-  #   steps:
-  #     - task: RestoreCache@1
-  #       inputs:
-  #         keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
-  #         targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
-  #         vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
-  #         platformIndependent: true
-  #     - bash: npm run test
-  #       displayName: Run unit tests
-
   - job: Build
-    dependsOn: NPM_install
+    # dependsOn: NPM_install
     pool:
       name: Hosted Ubuntu 1604
     steps:
-      - task: RestoreCache@1
+      - task: RestoreAndSaveCache@1
         inputs:
           keyfile: '**/package-lock.json, !**/node_modules/**/package-lock.json, !**/.*/**/package-lock.json'
           targetfolder: '**/node_modules, !**/node_modules/**/node_modules'
           vstsFeed: '106881c5-1e85-4e16-a467-be2702084631'
           platformIndependent: true
+      - bash: npm install
+        displayName: NPM Install Dependencies
+        condition: ne(variables['CacheRestored'], 'true')
       - bash: npm run build
         displayName: Build Angular application
