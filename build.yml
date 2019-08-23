@@ -12,5 +12,6 @@ steps:
     platformIndependent: true
 - bash: npm install
   displayName: NPM Install Dependencies
+  condition: ne(variables['CacheRestored'], 'true')
 - bash: npm run build
   displayName: Build Angular application
